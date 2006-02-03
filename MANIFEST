@@ -1,6 +1,6 @@
-Message.pm
+CGI/AppBuilder/Message.pm
+t/ab_Message.t
 test.pl
 Makefile.PL
-t/Message.t
-CGI-AppBuilder-Message-0.11.readme
+CGI-AppBuilder-Message-0.12.readme
 README

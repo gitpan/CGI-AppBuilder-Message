@@ -9,13 +9,14 @@ use CGI::AppBuilder;
 # require Exporter;
 @ISA = qw(Exporter CGI::AppBuilder);
 our @EXPORT = qw();
-our @EXPORT_OK = qw(disp_param set_param echo_msg debug_level
+our @EXPORT_OK = qw(disp_param set_param echo_msg debug_level echoMSG
+    debug
     );
 our %EXPORT_TAGS = (
   all      => [@EXPORT_OK],
   echo_msg => [qw(disp_param echo_msg debug_level)],
 );
-$CGI::AppBuilder::Message::VERSION = 0.11;
+$CGI::AppBuilder::Message::VERSION = 0.12;
 
 =head1 NAME
 
@@ -45,10 +46,6 @@ in CGI::AppBuilder for more details.
 
 =cut
 
-{  # Encapsulated class data
-   _debug_level      =>0,  # debug level
-};
-
 sub new {
   my ($s, %args) = @_;
   return $s->SUPER::new(%args);
@@ -73,6 +70,8 @@ How to use:
 Return: the debug level or set the debug level.
 
 =cut
+
+*debug = \&CGI::AppBuilder::Message::debug_level;
 
 sub debug_level {
     # my ($c_pkg,$c_fn,$c_ln) = caller;
@@ -135,6 +134,8 @@ The filehandler is provided through $fh or $ENV{FH_DEBUG_LOG}, and
 the outputs are written to the file.
 
 =cut
+
+*echoMSG = \&CGI::AppBuilder::Message::echo_msg; 
 
 sub echo_msg {
     # my ($c_pkg,$c_fn,$c_ln) = caller;
@@ -299,6 +300,8 @@ sub set_param {
     return (exists $r->{$v})?$r->{$v}:"" if ref($r) =~ /^HASH/||ref $r;
     return "";     # catch all
 }
+
+1;
 
 =head1 CODING HISTORY
 
